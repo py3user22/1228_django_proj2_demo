@@ -23,6 +23,8 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
         path('admin/', admin.site.urls),
-        path('', include('app_1228.urls')),
+        #path('', include('app_1228.urls')),
         path('__debug__/', include(debug_toolbar.urls)),
+        path('', include('app_LittleLemonAPI.urls')),
+        path('api/', include('app_LittleLemonAPI.urls')),
     ]

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1229 django serializers demo</title>
+    <style>
+        p {border: blue 2px dashed; padding: 5px 0 5px 10px;}
+
+    </style>
+</head>
+<body>
+    <h2><i>1229 django serializers install demo2</i></h2>
+    <a href="#botpg" id="topg">Link to page bottom</a>
+    <p>
+        # models.py <br>------------<br>
+        <a href="from" id="from">from</a> django.db <a href="import" id="import">import</a> models <br>
+        <br>
+        ______# Create your models here. <br>
+        <a href="class" id="class">class</a> <i><b>MenuItem</b></i>(models.Model): <br>
+        .. title = models.CharField(max_length=255) <br>
+        .. price = models.DecimalField(max_digits=6, decimal_places=2) <br>
+        .. inventory = models.SmallIntegerField() <br>
+        <br>
+        # create new serializers.py file <br>--------------------<br>
+        <a href="from" id="from">from</a> rest_framework <a href="import" id="import">import</a> serializers <br>
+        <a href="from" id="from">from</a> .models <a href="import" id="import">import</a> MenuItem <br>
+        <br>
+        <a href="class" id="class">class</a> <b>MenuItemSerializer</b>(serializers.ModelSerializer): <br>
+        .. <a href="class" id="class">class</a> Meta: <br>
+        .. model = <i><b>MenuItem</b></i> <br>
+        .. fields = [ <br>
+        ...... 'id', <br>
+        ...... 'title', <br>
+        ...... 'price', <br>
+        ...... 'inventory' <br>
+        .. ] <br>
+        <br>
+        <a href="class" id="class">class</a>
+        <a href="def" id="def">def</a>
+        <a href="from" id="from">from</a>
+        <a href="import" id="import">import</a>
+        <a href="return" id="return">return</a>
+        # views.py <br>---------------<br>
+        <a href="from" id="from">from</a> rest_framework <a href="import" id="import">import</a> generics <br>
+        <a href="from" id="from">from</a> .models <a href="import" id="import">import</a> <i><b>MenuItem</b></i> <br>
+        <a href="from" id="from">from</a> .serializers <a href="import" id="import">import</a> MenuItemSerializer <br>
+        <a href="from" id="from">from</a> django.shortcuts <a href="import" id="import">import</a> render  <br>
+        <br>
+        <a href="class" id="class">class</a> MenuItemView(generics.ListCreateAPIView): <br>
+        .. queryset = <i><b>MenuItem</b></i>.objects.all() <br>
+        .. serializer_class = <b>MenuItemSerializer</b> <br>
+        <br>
+        <a href="def" id="def">def</a> home2(request): <br>
+        .. <a href="return" id="return">return</a> render(request, '1229_django_serializers_install.html', {}) <br>
+        <br><br>
+    </p>
+    <p>
+        # admin.py <br> ----------<br>
+        <a href="from" id="from">from</a> django.contrib <a href="import" id="import">import</a> admin <br>
+        <a href="from" id="from">from</a> .models <a href="import" id="import">import</a> <i><b>MenuItem</b></i> <br>
+        <br>
+        # Register your models here. <br>
+        admin.site.register(<i><b>MenuItem</b></i>) <br>
+        <br>
+        # urls.py <br>------------<br>
+        <a href="from" id="from">from</a> . <a href="import" id="import">import</a> views <br>
+        <a href="from" id="from">from</a> django.urls <a href="import" id="import">import</a> path  <br>
+        <br>
+        urlpatterns = [<br>
+        .. path('', views.home2), <br>
+        .. path('menu-items', views.MenuItemView.as_view()),<br>]<br>
+
+        <br>
+    </p>
+    #1231 serializers.py edit2 <br>---------------<br>
+    class MenuItemSerializer(serializers.ModelSerializer): <br>
+    .. stock = serializers.IntegerField(source='inventory') <br>
+    .. class Meta: <br>
+    ...... model = MenuItem <br>
+    ...... fields = ['id', 'title', 'price', 'stock', 'price_after_tax'] <br>
+    <br>
+    .. def calculate_tax(self, product:MenuItem): <br>
+    ...... return product.price * Decimal(1.1) <br>
+
+
+    <br>
+    <a href="#topg" id="botpg">link to top page</a>
+</body>
+</html>

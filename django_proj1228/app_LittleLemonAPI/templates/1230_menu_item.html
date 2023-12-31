@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1230 menu-item  demo1</title>
+</head>
+<body>
+    <h2><i>1230 django renderer</i></h2>
+    <table width="100%" style="text-align: left;">
+        <tr>
+            <th>Item</th>  <!-- column heading -->
+            <th>Price</th>  <!-- column heading -->
+            <th>Price after Tax</th>  <!-- column heading -->
+            <th>Stock</th>  <!-- stock column heading -->
+        </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.price_after_tax }}</td>
+            <td>{{ item.stock }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>
+        #views.py <br>------------<br>
+         <a href="from" id="from">from</a> django.urls <a href="import" id="import">import</a> path <br>
+         <a href="from" id="from">from</a> . <a href="import" id="import">import</a> views <br>
+        <br>
+        urlpatterns = [<br>
+        .. path('menu-items', views.menu_items), <br>
+        .. path('menu-items/<int:id>', views.single_item),<br>
+        .. path('menu', views.menu),<br>]<br>
+    </p>
+</body>
+</html>

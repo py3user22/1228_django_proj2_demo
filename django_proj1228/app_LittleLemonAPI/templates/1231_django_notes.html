@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1231 django notes </title>
+    <style>
+        p {border: blue 2px dashed; padding: 5px 0 5px 10px;}
+        .from {color: purple;}
+        .class {color: green;}
+        .def {color: orange;}
+        .import {color: red;}
+        .return {color: green;}
+    </style>
+</head>
+<body>
+    <h2><i>1231 django notes </i></h2>
+    <a href="#botpg" id="topg">Link to bottom page</a>
+    <p>
+        <a href="from" class="from">from</a> _|_ <a href="import" class="import">import</a> <br> ---------<br>
+        <a href="class" class="class">class</a> _|_ <a href="def" class="def">def</a> <br> ----------<br>
+        <a href="return" class="return">return</a> _|_
+    </p>
+    <p>
+        ___________#views.py ex1231 <br>----------<br>
+        <a href="from" class="from">from</a> rest_framework.response <a href="import" class="import">import</a> Response <br>
+        <a href="from" class="from">from</a> rest_framework.decorators <a href="import" class="import">import</a> api_view <br>
+        <a href="from" class="from">from</a> .models <a href="import" class="import">import</a> <b>MenuItem</b> <br>
+        <a href="from" class="from">from</a> .serializers <a href="import" class="import">import</a> <b><i>MenuItemSerializer</i></b> <br>
+        <a href="from" class="from">from</a> django.shortcuts <a href="import" class="import">import</a> get_object_or_404 <br>
+        <br>
+        @api_view()<br>
+        <a href="def" class="def">def</a> menu_items(request): <br>
+        .. items = <b>MenuItem</b>.objects.all() <br>
+        .. return Response(items.values()) <br>
+        <br>
+        ___________#views.py 2nd edit<br>----------------<br>
+        @api_view()<br>
+        <a href="def" class="def">def</a> menu_items(request): <br>
+        .. items = <b>MenuItem</b>.objects.all() <br>
+        .. serialized_item = <b><i>MenuItemSerializer</i></b>(items, many=True) <br>
+        .. <a href="return" class="return">return</a> Response(serialized_item.data) <br>
+        <br>
+        ___________#views.py 3rd edit > add single_items method <br>-----------------------<br>
+        @api_view()<br>
+        <a href="def" class="def">def</a> single_item(request): <br>
+        .. item = <b>MenuItem</b>.objects.get(pk=id) <br>
+        .. serialized_item = <i><b>MenuItemSerializer</b></i>(item) <br>
+        .. <a href="return" class="return">return</a> Response(serialized_item.data) <br>
+        <br>
+        ___________#views.py 4th edit > add a 404 message if no match model <br>
+        @api_view()<br>
+        <a href="def" class="def">def</a> single_item(request, id)): <br>
+        .. item = get_object_or_404(<b>MenuItem</b>,pk=id) <br>
+        .. serialized_item = <i><b>MenuItemSerializer</b></i>(item) <br>
+        .. <a href="return" class="return">return</a> Response(serialized_item.data) <br>
+        <br>
+        #__________#views.py 5th edit > change items to select_related <br>
+
+        @api_view()<br>
+        <a href="def" class="def">def</a> menu_items(request): <br>
+        .. items = <b>MenuItem</b>.objects.select_related('category').all() <br>
+        .. serialized_item = <i><b>MenuItemSerializer</b></i>(items, many=True) <br>
+        .. <a href="return" class="return">return</a> Response(serialized_item.data) <br>
+        <br>
+
+    </p>
+    <p>
+        ___________#serializers.py demo2 adding columns 1231 <br>-----------------------------<br>
+        <a href="from" class="from">from</a> rest_framework <a href="import" class="import">import</a> serializers<br>
+        <a href="from" class="from">from</a> .models <a href="import" class="import">import</a> MenuItem, Category<br>
+        <a href="from" class="from">from</a> decimal <a href="import" class="import">import</a> Decimal<br>
+
+        <br>
+        <a href="from" class="from">from</a> MenuItemSerializer(serializers.Serializer): <br>
+        .. id = serializers.IntegerField() <br>
+        .. title = serializers.CharField() <br>
+        .. price = serializers.DecimalField(max_digit=6, decimal_places=2) <br>
+        .. inventory = serializers.IntegerField() <br>
+        <br>
+        ___________#edit2 > change to modelserializer <br>----------------------<br>
+        <a href="class" class="class">class</a> <b><i>MenuItemSerializer</i></b>(serializers.ModelSerializer): <br>
+        .. stock = serializers.IntegerField(source='inventory') <br>
+        .. price_after_tax = serializers.SerializeMethodField(method_name = 'calculate_tax') <br>
+        .. category = serializers.StringRelatedField() <br>
+        .. <a href="class" class="class">class</a> Meta: <br>
+        ...... model = <b>MenuItem</b> <br>
+        ...... fields = ['id', 'title', 'price', 'stock', 'price_after_tax', 'category'] <br><br>
+        .. <a href="def" class="def">def</a> calculate_tax(self, product:<b>MenuItem</b>): <br>
+        ...... <a href="return" class="return">return</a> product.price * Decimal(1.1) <br>
+        <br> <br>
+        __________#edit3 > change category to CategorySerializer() <br>
+        ----------------------<br>
+        <a href="class" class="class">class</a> <b><i>MenuItemSerializer</i></b>(serializers.ModelSerializer): <br>
+        .. stock = serializers.IntegerField(source='inventory') <br>
+        .. price_after_tax = serializers.SerializeMethodField(method_name = 'calculate_tax') <br>
+        .. category = CategorySerializer() <br>
+        .. <a href="class" class="class">class</a> Meta: <br>
+        ...... model = <b>MenuItem</b> <br>
+        ...... fields = ['id', 'title', 'price', 'stock', 'price_after_tax', 'category'] <br><br>
+        .. <a href="def" class="def">def</a> calculate_tax(self, product:<b>MenuItem</b>): <br>
+        ...... <a href="return" class="return">return</a> product.price * Decimal(1.1) <br>
+        <br>
+
+    </p>
+    <p>
+        # relationships serializers >> models.py add new model <br>-------------------<br>
+        _____________#models.py  <br>--------------
+        <br>
+        <a href="from" class="from">from</a> django.db <a href="import" class="import">import</a> models<br>        <a href="from" class="from">from</a> decimal <a href="import" class="import">import</a> Decimal<br> <br>
+
+
+        <a href="class" class="class">class</a> <i><b>Category</b></i>(models.Model): <br>
+        .. slug = models.SlugField() <br>
+        .. title = models.CharField(max_length=255) <br>
+        <br>
+        .. <a href="def" class="def">def</a> __str__(self)-> str: <br>
+        ...... <a href="return" class="return">return</a> self.title <br>
+        <br>
+        <a href="class" class="class">class</a> <b>MenuItem</b>(models.Model): <br>
+        .. title = models.CharField(max_length=255) <br>
+        .. price = models.DecimalField(max_digits=6, decimal_places=2) <br>
+        .. inventory = models.SmallIntegerField() <br>
+        .. category = models.ForeignKey(<i><b>Category</b></i>, on_delete=models.PROTECT, default=1) <br>
+        <br>
+    </p>
+    <p>
+        #TemplateHTMLRenderer <br>--------------<br>
+        <a href="from" class="from">from</a> rest_framework.decorators <a href="import" class="import">import</a> api_view, renderer_classes <br>
+        <a href="from" class="from">from</a> rest_framework.renderers <a href="import" class="import">import</a> TemplateHTMLRenderer <br>
+        <br>
+        views.py <br>----------------<br>
+        # create new function <br>
+        @api_view()<br>@renderer_classes ([TemplateHTMLRenderer]) <br>
+        <a href="def" class="def">def</a> menu(request): <br>
+        .. items = <b>MenuItem</b>.objects.select_related('category').all() <br>
+        .. serialized_item = <i><b>MenuItemSerializer</b></i>(items, many=True) <br>
+        .. <a href="return" class="return">return</a> Response({'data': serialized_item.data}, template_name='menu-items.html')
+        <br>
+    </p>
+    <a href="#topg" id="botpg">link to top page</a>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1230 django renderers demo</title>
+</head>
+<body>
+    <h2><i>1230 django renderers demo</i></h2>
+    <p>
+        <a href="class" id="class">class</a>
+        <a href="def" id="def">def</a> __ <a href="return" id="return">return</a>
+        <a href="from" id="from">from</a> __ <a href="import" id="import">import</a>
+
+    </p>
+    <p>
+        # install restframwork-xml renderer <br>
+        >> pipenv shell <br>
+        >> pipenv install djangorestframework-xml <br>
+        <br>
+        #settings.py<br>REST_FRAMEWORK = {<br>
+        .. 'DEFAULT_RENDERER_CLASSES': [<br>
+        ...... 'rest_framework.renderers.JSONRenderer', <br>
+        ...... 'rest_framework.renderers.BrowsableAPIRenderer', <br>
+        ...... 'rest_framework_xml.renderers.XMLRenderer', <br>..]<br>}<br>
+        <br>
+        # go to app Insomnia <br>
+        GET request >> 127.0.0.1:8000/api/menu-items/ <br>
+        Accept __|__  application/xml <br>
+        <br>
+        #1230 views.py > read 'Different types of renderers' w2 <br>-------------<br>
+        <a href="from" id="from">from</a> rest_framework.renderers <a href="import" id="import">import</a> TemplateHTMLRenderer <br>
+        <a href="from" id="from">from</a> rest_framework.decorators <a href="import" id="import">import</a> api_view, renderer_classes <br>
+        <br>
+        @api_view() <br>@renderer_classes ([TemplateHTMLRenderer]) <br>
+        <a href="def" id="def">def</a> menu(request): <br>
+        .. items = <i><b>MenuItem</b></i>.objects.select_related('category').all() <br>
+        .. serialized_item = <b>MenuItemSerializer</b>(items, many=True) <br>
+        .. <a href="return" id="return">return</a> Response({'data':serialized_item.data}, template_name='menu-items.html') <br>
+        <br>
+    </p>
+</body>
+</html>
