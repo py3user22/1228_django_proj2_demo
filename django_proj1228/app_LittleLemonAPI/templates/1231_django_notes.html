@@ -65,6 +65,24 @@
 
     </p>
     <p>
+        ____________#ex0101 serialization > views.py <br>-------------------<br>
+        <a href="from" class="from">from</a> rest_framework <a href="import" class="import">import</a> generics <br>
+        <a href="from" class="from">from</a> models <a href="import" class="import">import</a> <i><b>MenuItem</b></i> <br>
+        <a href="from" class="from">from</a> .serializers <a href="import" class="import">import</a> <b>MenuItemSerializer</b> <br>
+        <br> <br>
+        <a href="class" class="class">class</a> <b>MenuItemsView</b>(generics.ListCreateAPIView): <br>
+        .. queryset = <i><b>MenuItem</b></i>.objects.all() <br>
+        .. serializer_class = <b>MenuItemSerializer</b>
+        <br>
+        <a href="class" class="class">class</a> <b>SingleMenuItemsView</b>(generics.RetrieveUpdateDestroyAPIView): <br>
+        .. queryset = <i><b>MenuItem</b></i>.objects.all() <br>
+        .. serializer_class = <b>MenuItemSerializer</b>
+        <br>
+
+
+
+    </p>
+    <p>
         ___________#serializers.py demo2 adding columns 1231 <br>-----------------------------<br>
         <a href="from" class="from">from</a> rest_framework <a href="import" class="import">import</a> serializers<br>
         <a href="from" class="from">from</a> .models <a href="import" class="import">import</a> MenuItem, Category<br>
@@ -218,7 +236,11 @@
 
     <br>
     </p>
+    <p>
+        #
 
+
+    </p>
     <a href="#topg" id="botpg">link to top page</a>
 </body>
 </html>
