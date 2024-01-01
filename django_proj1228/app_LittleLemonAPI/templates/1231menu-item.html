@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1231 menu-item demo</title>
+</head>
+<body>
+    <table width="100%" style="text-align: left;">
+        <tr>
+            <th>Item</th>  <!-- item column heading -->
+            <th>Price</th>  <!-- heading price -->
+            <th>Price after Tax</th>  <!-- heading after tax-->
+            <th>Stock</th>  <!-- stock column heading -->
+        </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.price_after_tax }}</td>
+            <td>{{ item.stock }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

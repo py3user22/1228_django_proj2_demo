@@ -134,9 +134,91 @@
         <a href="def" class="def">def</a> menu(request): <br>
         .. items = <b>MenuItem</b>.objects.select_related('category').all() <br>
         .. serialized_item = <i><b>MenuItemSerializer</b></i>(items, many=True) <br>
-        .. <a href="return" class="return">return</a> Response({'data': serialized_item.data}, template_name='menu-items.html')
+        .. <a href="return" class="return">return</a> Response({'data': serialized_item.data}, template_name='1231menu-items.html')
         <br>
     </p>
+    # 1231menu-item.html table data demo.
+    <!-- 1231menu-item.html
+        <table width="100%" style="text-align: left;">
+            <tr>
+                <th>Item</th>  < !-- item column heading
+                <th>Price</th> < !-- column heading
+                <th>Price After Tax</th>   < !--
+                <th>Stock</th>  < !--
+            </tr>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.title }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.price_after_tax }}</td>
+                <td>{{ item.stock }}</td>
+            </tr>
+            {% endfor %}
+         </table>
+    -->
+    </p>
+    <p>
+        #urls.py <br>--------- http://127.0.0.1:8000/api/menu <br>
+        <br>
+        from django.urls import path <br>
+        from . import views <br><br>
+        urlpatterns = [ <br>
+        .. path('menu-items',views.menu_items), <br>
+        .. path('menu-items/< int:id>',views.single_item) <br>
+        .. path('menu',views.menu), <br>
+    </p>
+    <p>
+        #StaticHTMLRenderer <br>--------------<br>
+        <a href="from" class="from">from</a> rest_framework.renderers <a href="import" class="import">import</a> TemplateHTMLRenderer<br>
+        <a href="from" class="from">from</a> rest_framework.decorators <a href="import" class="import">import</a> api_view, renderer_classes<br>
+        <br>
+        # create new function >> views.py <br>---------------<br>
+        @api_view(['GET']) <br>
+        @renderer_classes([StaticHTMLRenderer]) <br>
+        <a href="def" class="def">def</a> welcome(request): <br>
+        .. data = '1231menu-items.html' <br>
+        .. <a href="return" class="return">return</a> Response(data) <br>
+        <br>
+    </p>
+    <p>
+        # CSV renderer < comma seperated values <br>
+        >> pipenv install djangorestframework-csv <br>
+        <br>
+        # views.py <br>------------<br>
+        from rest_framework_csv.renderers import CSVRenderer <br>
+        <br>
+        @api_view() <br>
+        @renderer_classes([CSVRenderer]) <br>
+        <a href="def" class="def">def</a> menu-items(request): <br>
+
+
+    </p>
+    <p>
+        # YAML renderer <br>------------------<br>
+        >> pipenv install djangorestframework-yaml <br>
+        <br>
+        # views.py >> function menu-items <br>------------------<br>
+        <a href="from" class="from">from</a> rest_framework_yaml.renderers <a href="import" class="import">import</a> YAMLRenderer<br>
+        <br>
+        @api_view() <br>
+        @renderer_classes([YAMLRenderer]) <br>
+        <a href="def" class="def">def</a> menu-items(request): <br>
+    </p>
+    <p>
+        # global settings >> settings.py edit <br>---------------<br>
+        REST_FRAMEWORK = {<br>
+        'DEFAULT_RENDERER_CLASSES': [<br>
+        .. 'rest_framework.renderers.JSONRenderer', <br>
+        .. 'rest_framework.renderers.BrowsableAPIRenderer', <br>
+        .. 'rest_framework_xml.renderers.XMLRenderer', <br>
+        .. 'rest_framework_csv.renderers.CSVRenderer', <br>
+        .. 'rest_framework_yaml.renderers.YAMLRenderer', <br>] }<br>
+        <br>
+
+
+    <br>
+    </p>
+
     <a href="#topg" id="botpg">link to top page</a>
 </body>
 </html>
